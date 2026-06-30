@@ -154,3 +154,52 @@ const Cart = (() => {
 })();
 
 document.addEventListener('DOMContentLoaded', () => Cart.init());
+
+/* ===== SITE SEARCH (wires the nav search icon on every page) ===== */
+(() => {
+  const PRODUCTS = [
+    { name: 'Trudermal Halo LED Hair Growth Cap', url: '/products/halo.html', price: 'NZD $799', kw: 'hair growth cap halo scalp loss thinning shedding 660nm red light' },
+    { name: 'Trudermal Glow LED Face Mask', url: '/products/glow.html', price: 'NZD $689', kw: 'face mask glow acne wrinkles fine lines led blue red near infrared wavelength' },
+    { name: 'LED Neck & Décolletage Mask', url: '/products/neck.html', price: 'NZD $689', kw: 'neck decolletage chest crepey firming 1072nm anti ageing aging' },
+    { name: 'Microneedling Infusion Kit', url: '/products/microneedling.html', price: 'from NZD $174', kw: 'microneedling micro infusion serum 24k gold stamp collagen peptide' },
+    { name: 'Trudermal Pro LED Device', url: '/products/pro.html', price: 'NZD $4,999', kw: 'pro professional clinic full body device panel' },
+    { name: 'Bundles — Save 20%', url: '/products/bundles.html', price: 'from NZD $727', kw: 'bundle bundles save set glow grow combo deal' }
+  ];
+
+  function build() {
+    if (document.getElementById('site-search')) return;
+    const el = document.createElement('div');
+    el.id = 'site-search';
+    el.style.cssText = 'display:none;position:fixed;inset:0;z-index:1500;background:rgba(0,0,0,.45);';
+    el.innerHTML =
+      '<div style="background:#fff;max-width:640px;margin:0 auto;padding:24px 24px 28px;">' +
+      '<input id="site-search-input" type="text" placeholder="Search products…" autocomplete="off" ' +
+      'style="width:100%;padding:14px 16px;font-size:1rem;border:1px solid #e8e2dc;font-family:inherit;outline:none;">' +
+      '<div id="site-search-results" style="margin-top:8px;max-height:60vh;overflow:auto;"></div></div>';
+    document.body.appendChild(el);
+    el.addEventListener('click', e => { if (e.target === el) closeSearch(); });
+    document.getElementById('site-search-input').addEventListener('input', render);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSearch(); });
+  }
+  function openSearch() {
+    build();
+    document.getElementById('site-search').style.display = 'block';
+    const i = document.getElementById('site-search-input');
+    i.value = ''; render(); i.focus();
+  }
+  function closeSearch() {
+    const el = document.getElementById('site-search');
+    if (el) el.style.display = 'none';
+  }
+  function render() {
+    const q = (document.getElementById('site-search-input').value || '').toLowerCase().trim();
+    const list = q ? PRODUCTS.filter(p => (p.name + ' ' + p.kw).toLowerCase().includes(q)) : PRODUCTS;
+    const box = document.getElementById('site-search-results');
+    box.innerHTML = list.length
+      ? list.map(p => `<a href="${p.url}" style="display:flex;justify-content:space-between;gap:16px;padding:14px 8px;border-bottom:1px solid #f0ece7;color:#2c2c2c;text-decoration:none;"><span>${p.name}</span><span style="color:#626262;white-space:nowrap;">${p.price}</span></a>`).join('')
+      : `<p style="padding:16px 8px;color:#626262;">No products match "${q}".</p>`;
+  }
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.nav__search').forEach(b => b.addEventListener('click', openSearch));
+  });
+})();

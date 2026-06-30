@@ -90,7 +90,7 @@
       <div class="product-hero__info">
         <div class="product-hero__eyebrow">At-Home Skin Rejuvenation</div>
         <h1 class="product-hero__title">Microneedling<br>Infusion Kit</h1>
-        <div class="product-hero__price">NZD $159.00* <span style="font-size:1rem; color:var(--text-mute); font-weight:400;">*provisional NZ price</span></div>
+        <div class="product-hero__price" id="mn-price">NZD $174.00 <span style="font-size:1rem; color:var(--text-mute); font-weight:400;"><s>$218.00</s></span></div>
         <p class="product-hero__tagline">Reduce signs of ageing and reveal a brighter, smoother complexion — with a 24k gold micro-infusion stamp and peptide-rich serum.</p>
 
         <div class="product-hero__badges">
@@ -100,6 +100,13 @@
           <span class="badge">90-Day Money Back</span>
         </div>
 
+        <!-- Pricing options: Select your Supply (matches Trudermal) -->
+        <div style="font-weight:600; font-size:0.8rem; letter-spacing:0.04em; margin-top:8px;">Select your supply — bundle &amp; save</div>
+        <div class="price-options" id="mn-options">
+          <label class="price-option is-active"><input type="radio" name="mn-supply" value="6wk" data-price="174" data-label="6 Week Supply" checked><span class="price-option__name">6 Week Supply<br><span style="font-weight:400; font-size:0.75rem; color:var(--text-mute);">3 treatments · 1 box</span></span><span class="price-option__price">NZD $174</span></label>
+          <label class="price-option"><input type="radio" name="mn-supply" value="3mo" data-price="239" data-label="3 Month Supply"><span class="price-option__name">3 Month Supply <span class="price-option__save">Most popular</span><br><span style="font-weight:400; font-size:0.75rem; color:var(--text-mute);">6 treatments · 2 boxes</span></span><span class="price-option__price">NZD $239 <s style="color:var(--text-mute); font-weight:400;">$348</s></span></label>
+        </div>
+
         <div class="product-hero__guarantees">
           <div class="guarantee-item">Free NZ Shipping</div>
           <div class="guarantee-item">90-Day Money Back</div>
@@ -107,7 +114,7 @@
         </div>
 
         <div class="product-hero__cta">
-          <button class="btn btn--primary btn--lg" onclick="Cart.addItem({id:'microneedling',name:'Microneedling Infusion Kit',price:159,image:'https://cdn.shopify.com/s/files/1/0901/2402/6223/files/Untitled_design_38.png'})">Add to Cart</button>
+          <button class="btn btn--primary btn--lg" id="mn-add">Add to Cart</button>
           <a href="bundles.html" class="btn btn--outline">View Bundles — Save 20%</a>
         </div>
 
@@ -124,6 +131,33 @@
           <div style="color:var(--gold); margin-bottom:6px;">★★★★★</div>
           <p style="font-size:0.85rem; font-style:italic; color:var(--text-mute);">"My skin has never felt so smooth, plump and glowing since adding this to my routine."</p>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- See It In Action -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h4>See It In Action</h4>
+      <h2>Watch the Kit at Work</h2>
+      <p>Real Trudermal footage — from unboxing the kit to the 24k gold-stamp technique.</p>
+    </div>
+    <div class="grid-2" style="gap:24px;">
+      <div class="video-feature__poster" data-video-trigger
+           data-video-src="https://trudermalco.com/cdn/shop/videos/c/vp/122ed172569547b983eed39c002a6d22/122ed172569547b983eed39c002a6d22.HD-1080p-7.2Mbps-81543854.mp4"
+           data-video-poster="https://cdn.shopify.com/s/files/1/0901/2402/6223/files/Untitled_design_38.png"
+           role="button" tabindex="0" aria-label="Play unboxing video">
+        <img src="https://cdn.shopify.com/s/files/1/0901/2402/6223/files/Untitled_design_38.png" alt="Microneedling Infusion Kit unboxing">
+        <div class="video-feature__play"><span></span></div>
+      </div>
+      <div class="video-feature__poster" data-video-trigger
+           data-video-src="https://cdn.shopify.com/videos/c/o/v/42891a9ee67d41aebc50937466ffd64a.mp4"
+           data-video-poster="https://cdn.shopify.com/s/files/1/0901/2402/6223/files/6.png"
+           role="button" tabindex="0" aria-label="Play technique video">
+        <img src="https://cdn.shopify.com/s/files/1/0901/2402/6223/files/6.png" alt="24k gold stamp microneedling technique">
+        <div class="video-feature__play"><span></span></div>
       </div>
     </div>
   </div>
@@ -401,9 +435,33 @@
   </div>
 </footer>
 
+<!-- Video Modal -->
+<div class="video-modal">
+  <button class="video-modal__close" aria-label="Close video">×</button>
+  <video controls playsinline preload="none"><source src="" type="video/mp4"></video>
+</div>
+
 <!-- Lightbox -->
 <div class="lightbox"><img src="" alt=""></div>
 
+<script>
+(function(){
+  var opts = document.querySelectorAll('#mn-options .price-option');
+  var priceEl = document.getElementById('mn-price');
+  function selected(){ return document.querySelector('#mn-options input:checked'); }
+  function refresh(){
+    opts.forEach(function(o){ o.classList.toggle('is-active', o.querySelector('input').checked); });
+    var inp = selected();
+    priceEl.innerHTML = 'NZD $' + Number(inp.dataset.price).toFixed(2);
+  }
+  opts.forEach(function(o){ o.querySelector('input').addEventListener('change', refresh); });
+  refresh();
+  document.getElementById('mn-add').addEventListener('click', function(){
+    var inp = selected();
+    Cart.addItem({ id:'microneedling-'+inp.value, name:'Microneedling Infusion Kit — '+inp.dataset.label, price:Number(inp.dataset.price), image:'https://cdn.shopify.com/s/files/1/0901/2402/6223/files/Untitled_design_38.png' });
+  });
+})();
+</script>
 <script src="../js/gallery.js"></script>
 <script src="../js/cart.js"></script>
 <script src="../js/checkout.js"></script>

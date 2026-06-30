@@ -54,9 +54,21 @@
     var modal = document.querySelector('.video-modal');
     if (!modal) return;
     var video = modal.querySelector('video');
+    var source = video ? video.querySelector('source') : null;
     var triggers = document.querySelectorAll('[data-video-trigger]');
 
-    function open() {
+    function openFor(trigger) {
+      // each trigger may carry its own video via data-video-src; otherwise use the modal's existing source
+      var src = trigger.getAttribute('data-video-src');
+      if (src && video) {
+        var poster = trigger.getAttribute('data-video-poster');
+        if (poster) video.setAttribute('poster', poster);
+        if (source) {
+          if (source.getAttribute('src') !== src) { source.setAttribute('src', src); video.load(); }
+        } else {
+          video.setAttribute('src', src); video.load();
+        }
+      }
       modal.classList.add('is-open');
       if (video) { try { video.currentTime = 0; video.play(); } catch (e) {} }
     }
@@ -65,7 +77,7 @@
       if (video) video.pause();
     }
 
-    triggers.forEach(function (t) { t.addEventListener('click', open); });
+    triggers.forEach(function (t) { t.addEventListener('click', function () { openFor(t); }); });
     modal.addEventListener('click', function (e) {
       if (e.target === modal || e.target.classList.contains('video-modal__close')) close();
     });
