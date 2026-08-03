@@ -49,10 +49,6 @@
         <button class="nav__search" aria-label="Search">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         </button>
-        <button class="cart-icon-btn" onclick="Cart.openDrawer()" aria-label="Open cart">
-          <img src="https://trudermalco.com/cdn/shop/t/8/assets/basket.png" alt="Cart" class="cart-icon-img">
-          <span class="cart-badge">0</span>
-        </button>
       </div>
     </div>
   </div>
@@ -84,10 +80,9 @@
           </ul>
         </div>
         <div style="text-align:right; min-width:200px;">
-          <div style="font-size:0.9rem; color:var(--text-mute); text-decoration:line-through; margin-bottom:4px;">AUD $1,298.00</div>
-          <div style="font-size:2rem; font-weight:700; color:var(--gold);">AUD $1,038.00</div>
-          <div style="font-size:0.85rem; color:var(--text-mute); margin-bottom:16px;">NZD price TBC</div>
-          <button class="btn btn--primary btn--lg" onclick="Cart.addItem({id:'bundle-glow-grow',name:'LED Glow + Grow Bundle',price:1038,image:'https://trudermalco.com/cdn/shop/files/Bundle_led_face_mask_and_led_hair_growth_helmet.jpg'})">Add Bundle to Cart</button>
+          <div style="font-size:0.9rem; color:var(--text-mute); text-decoration:line-through; margin-bottom:4px;">NZD $1,298.00</div>
+          <div style="font-size:2rem; font-weight:700; color:var(--gold); margin-bottom:16px;">NZD $1,038.00</div>
+          <a class="btn btn--primary btn--lg" href="https://buy.stripe.com/aFa00b11Pe8BcRf8cjfnO07">Buy bundle securely</a>
         </div>
       </div>
     </div>
@@ -106,10 +101,9 @@
           </ul>
         </div>
         <div style="text-align:right; min-width:200px;">
-          <div style="font-size:0.9rem; color:var(--text-mute); text-decoration:line-through; margin-bottom:4px;">AUD $1,198.00</div>
-          <div style="font-size:2rem; font-weight:700; color:var(--gold);">AUD $958.00</div>
-          <div style="font-size:0.85rem; color:var(--text-mute); margin-bottom:16px;">NZD price TBC</div>
-          <button class="btn btn--primary btn--lg" onclick="Cart.addItem({id:'bundle-glow-mask',name:'Glow LED Mask Bundle',price:958,image:'https://trudermalco.com/cdn/shop/files/led_face_mask_red_light_therapy.png'})">Add Bundle to Cart</button>
+          <div style="font-size:0.9rem; color:var(--text-mute); text-decoration:line-through; margin-bottom:4px;">NZD $1,198.00</div>
+          <div style="font-size:2rem; font-weight:700; color:var(--gold); margin-bottom:16px;">NZD $958.00</div>
+          <a class="btn btn--primary btn--lg" href="https://buy.stripe.com/cNidR1bGt3tX5oNcszfnO08">Buy bundle securely</a>
         </div>
       </div>
     </div>
@@ -233,8 +227,5 @@
     </div>
   </div>
 </footer>
-
-<script src="../js/cart.js"></script>
-<script src="../js/checkout.js"></script>
 </body>
 </html>

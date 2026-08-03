@@ -49,10 +49,6 @@
         <button class="nav__search" aria-label="Search">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         </button>
-        <button class="cart-icon-btn" onclick="Cart.openDrawer()" aria-label="Open cart">
-          <img src="https://trudermalco.com/cdn/shop/t/8/assets/basket.png" alt="Cart" class="cart-icon-img">
-          <span class="cart-badge">0</span>
-        </button>
       </div>
     </div>
   </div>
@@ -116,7 +112,7 @@
         </div>
 
         <div class="product-hero__cta">
-          <button class="btn btn--primary btn--lg" id="mn-add">Add to Cart</button>
+          <button class="btn btn--primary btn--lg" id="mn-buy">Buy securely</button>
           <a href="bundles.html" class="btn btn--outline">View Bundles — Save 20%</a>
         </div>
 
@@ -458,14 +454,16 @@
   }
   opts.forEach(function(o){ o.querySelector('input').addEventListener('change', refresh); });
   refresh();
-  document.getElementById('mn-add').addEventListener('click', function(){
+  document.getElementById('mn-buy').addEventListener('click', function(){
     var inp = selected();
-    Cart.addItem({ id:'microneedling-'+inp.value, name:'Microneedling Infusion Kit — '+inp.dataset.label, price:Number(inp.dataset.price), image:'https://cdn.shopify.com/s/files/1/0901/2402/6223/files/Untitled_design_38.png' });
+    var paymentLinks = {
+      '6wk': 'https://buy.stripe.com/3cI6ozcKx4y12cBbovfnO05',
+      '3mo': 'https://buy.stripe.com/4gMeV5fWJ1lP2cBdwDfnO06'
+    };
+    window.location.href = paymentLinks[inp.value];
   });
 })();
 </script>
 <script src="../js/gallery.js"></script>
-<script src="../js/cart.js"></script>
-<script src="../js/checkout.js"></script>
 </body>
 </html>
